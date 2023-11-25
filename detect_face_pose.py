@@ -11,8 +11,8 @@ import time
 import sys
 parser = argparse.ArgumentParser("Face pose detection for one face")
 
-parser.add_argument("-p", "--path", help="To use video path.", type=str)
-parser.add_argument("-r", "--record_path", help="To use video path.", type=str)
+parser.add_argument("--path", help="To use video path.", type=str)
+parser.add_argument("--record_path", help="To use video path.", type=str)
 args = parser.parse_args()
 
 path = args.path
@@ -91,10 +91,10 @@ def visualizeCV2(frame, landmarks_, angle_R_, angle_L_, pred_):
 
 
         deepfake_color = (0, 0, 255)
-        deepfake_text = "Deep fake detected"
+        deepfake_text = "Alert !!! Deep fake detected"
         if pred == 'Frontal':
             deepfake_color = (0, 255, 0)  # Green for No deep fake detected
-            deepfake_text = "No deep fake detected"
+            deepfake_text = "Looking good..."
 
 
         point1 = [int(landmarks[0][0]), int(landmarks[1][0])]
@@ -187,18 +187,14 @@ def predFacePose(frame):
                     if cross_product > 0:
                         ang = -ang  # Left tilt
 
-                    print(f"Angle: {ang}")
+                    # print(f"Angle: {ang}")
 
                     angle_R_List.append(angR)
                     angle_L_List.append(angL)
 
-
-                    
-                 
-
                     # Pose determination logic
                     # Pose determination logic
-                    if ((int(angR) in range(35, 57)) and (int(angL) in range(35, 58)) and (int(ang) in range(119, 130))):
+                    if ((int(angR) in range(35, 57)) and (int(angL) in range(35, 58)) and (int(ang) in range(115, 130))):
                         predLabel = 'Frontal'
                     elif ((int(angR) in range(35, 57)) and (int(angL) in range(35, 58)) and int(ang) in range(100, 119)):
                         predLabel = 'Diagonal Left'
@@ -244,7 +240,7 @@ def main(video_source=0):
         ret, frame = video.read()
         if ret:
             landmarks_, angle_R_List, angle_L_List, predLabelList = predFacePose(frame)
-            # visualizeCV2(frame, landmarks_, angle_R_List, angle_L_List, predLabelList)
+            visualizeCV2(frame, landmarks_, angle_R_List, angle_L_List, predLabelList)
             if record_path:
                 out.write(frame)
 

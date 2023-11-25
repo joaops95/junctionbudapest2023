@@ -51,11 +51,11 @@ def call_deepfake_detection_api(image_base64):
         "data": [f"data:image/png;base64,{image_base64}", ""],
     }
 
-    print("Calling API...", payload)
+    # print("Calling API...", payload)
     headers = {'Content-Type': 'application/json'}
     
     response = requests.post(url, data=json.dumps(payload), headers=headers)
-    print("API Response:", response)
+    # print("API Response:", response)
     return response.json()
 
 
@@ -104,7 +104,7 @@ def main(video_path, output_folder, number_of_frames):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Deepfake detection in video frames')
     parser.add_argument('video_path', type=str, help='Path to the video file')
-    parser.add_argument('output_folder', type=str, help='Path to the output folder for extracted frames')
+    parser.add_argument('--output_folder', type=str, default='frames', help='Path to the output folder')
     parser.add_argument('--frames', type=int, default=5, help='Number of frames to extract and analyze (default: 5)')
 
     args = parser.parse_args()
