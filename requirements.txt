@@ -1,0 +1,9 @@
+opencv-python
+requests
+facenet-pytorch
+Pillow
+matplotlib
+numpy
+torch
+opencv-python
+requests
